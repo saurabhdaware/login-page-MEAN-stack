@@ -1,0 +1,16 @@
+.input-container{
+    padding:5px;
+}
+.submit-button{
+    padding:7px;
+    font-size:13pt;
+    font-weight: bold;
+    background-color: #09f;
+    color:#fff;
+    border:0px;
+    cursor: pointer;
+    width:200px;
+}
+.input-container label{
+    font-weight:bold;
+}
