@@ -1,8 +1,8 @@
 <div style="text-align:center">
-    <form>
-      <div class="input-container"><label for="name">Name : </label><input type="text" id="name" name="name"><br></div>
-      <div class="input-container"><label for="email">Email : </label><input type="email" id="email" name="email"><br></div>
-      <div class="input-container"><label for="pass">Password : </label><input type="password" id="pass" name="pass"></div><br>
-      <div class="input-container"><input class="submit-button" type="submit" value="Register" name="register" id="register"></div>
-    </form>
-  </div>
+  <form #registrationForm="ngForm">
+    <div class="input-container"><label for="name">Name : </label><input type="text" [ngModel]="name" autocomplete="name" id="name" name="name"><br></div>
+    <div class="input-container"><label for="email">Email : </label><input type="email" [ngModel]="email" autocomplete="email" id="email" name="email"><br></div>
+    <div class="input-container"><label for="pass">Password : </label><input type="password" [ngModel]="pass" autocomplete="password" id="pass" name="pass"></div><br>
+    <div class="input-container"><input class="submit-button" type="submit" value="Register" (click)="submitRegistrationForm(registrationForm)" name="register" id="register"></div>
+  </form>
+</div>

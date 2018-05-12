@@ -12,4 +12,9 @@ export class LoginUiComponent implements OnInit {
   ngOnInit() {
   }
 
+  submitLoginForm(loginForm){
+    console.log(loginForm.form.value.email);
+    console.log(loginForm.form.value.pass);
+  }
+
 }

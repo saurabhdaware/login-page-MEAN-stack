@@ -12,4 +12,11 @@ export class RegisterUiComponent implements OnInit {
   ngOnInit() {
   }
 
+  submitRegistrationForm(registrationForm){
+    console.log(registrationForm.form.value.name);
+    console.log(registrationForm.form.value.email);
+    console.log(registrationForm.form.value.pass);
+
+  }
+
 }
