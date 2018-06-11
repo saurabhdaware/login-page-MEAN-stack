@@ -1,7 +1,11 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
 
 var app = express();
+
+const user_db = mongoose.createConnection('mongodb://localhost:27017/user_db');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
@@ -22,13 +26,13 @@ app.use(function (req, res, next) {
     // to the API (e.g. in case you use sessions)
     res.setHeader('Access-Control-Allow-Credentials', true);
 
-    // Pass to next layer of middleware
+    // Pass to next layer of middleware   
     next();
 });
 
-app.post('/',function(req,res){
-    res.send(req.body);
-    console.log('yas');
-});
+let user_model = require('./api/models/user_model');
+let user_routes = require('./api/routes/user_routes');
+
+user_routes(app);
 
 app.listen(3000);
