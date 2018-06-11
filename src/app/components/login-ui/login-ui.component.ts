@@ -16,7 +16,7 @@ export class LoginUiComponent implements OnInit {
   submitLoginForm(loginForm){
     // console.log(loginForm.form.value.email);
     // console.log(loginForm.form.value.pass);
-    this.http.post('http://localhost:3000/',{
+    this.http.post('http://localhost:3000/login',{
       email:loginForm.form.value.email,
       pass:loginForm.form.value.pass
     }).subscribe(data=>console.log(data));

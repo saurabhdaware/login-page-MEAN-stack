@@ -24,9 +24,42 @@ exports.register = function(req,res){
                 });
             }
         })
-    })
+    }) 
 }
 
 exports.login = function(req,res){
-    res.send(req.body);
+    return new Promise(function(resolve,reject){
+        user_model.findOne({email:req.body.email},function(err,result){
+            if(err){
+                console.log(err);
+                reject(err);
+            }else if(!result){
+                reject('Entered email id is not registered');
+            }else if(result){
+                bcrypt.compare(req.body.pass, result.pass,function(err,value){ // compare passwords
+                    if(err){
+                        reject('Wrong Password try again');
+                    }
+                    if(value){
+                        let payload = {
+                            name:result.name+'sup?world'
+                        }
+                        let secretKey = 'secretKey22499';
+
+                        let token = jwt.sign(payload,secretKey,{expiresIn:1440}); // access token :: to be stored in user local storage
+
+                        resolve({login:'success',token:token});
+                    }else{
+                        reject('Wrong Password try again');
+                    }
+                })
+            }
+        })
+    })
 }
+
+// exports.jwtAuth = function(token,user){
+//     jwt.verify(token,'secretKey22499',function(err,decoded){
+//         if(decoded.name == user){resolve({})}
+//     })
+// }

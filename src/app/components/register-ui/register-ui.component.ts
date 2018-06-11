@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpClient,HttpHeaders, HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-register-ui',
@@ -7,16 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterUiComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http:HttpClient) { }
 
   ngOnInit() {
   }
 
   submitRegistrationForm(registrationForm){
-    console.log(registrationForm.form.value.name);
-    console.log(registrationForm.form.value.email);
-    console.log(registrationForm.form.value.pass);
-
+    let url = 'http://localhost:3000';
+    // console.log(registrationForm.form.value.email);
+    // console.log(registrationForm.form.value.pass);
+    this.http.post(url+'/register',registrationForm.form.value)
+    .subscribe((response)=>{console.log(response)});
   }
 
 }
