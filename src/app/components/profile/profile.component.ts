@@ -21,12 +21,12 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
   }
 
-  logoutClicked(){
+  logoutClicked(){ // if logout clicked we delete access token from localstorage and redirect user to homepage
     window.localStorage.removeItem('access-token');
     window.location.href="http://localhost:4200/"
   }
 
-  authorizeUser(){
+  authorizeUser(){ // same function as the one in home.component.ts except we send user back to home page if token doesnt exist and if it does, we get data of the user from backend and show it on the profile;
     try{
       const accessToken = JSON.parse(window.localStorage.getItem('access-token'));
       const httpOptions = {

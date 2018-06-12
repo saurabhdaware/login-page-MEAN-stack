@@ -1,8 +1,41 @@
 # LoginPageMEANStack
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.8.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli).
 
-(Project Under Development)
+This is a simple login page made with MEAN stack (MongoDB, ExpressJS, Angular 6, NodeJS).
+## This project includes:
+- User registration.
+- User login.
+- User Authorization.
+
+## Basic working of login page
+1. When user enters email and password and when both of them are correct we return an access token (generated with jwt)
+2. This access token is stored in localstorage of the browser.
+3. Now if user leaves the page and opens the same site again we check to see if there is any access token present in user's localstorage.
+4. if access token is present - > we verify that access token and redirect user to the profile page.
+5. if access token is not present - > we keep user on the same page.
+
+## About Directories
+- NodeJS and ExpressJS is inside `restApi/`
+- MongoDB database is in `user_db/`
+- Angular Components are in `src/app`
+
+## Prerequisites to understand the project
+- MEAN stack (Angular 2+)
+- ES6 Javascript (specially promises)
+- JWT: Json Web Token it is a libray to generate random token it has 2 function jwt.sign() to create token and jwt.verify() to verify
+- bcrypt - Library to hash passwords, I've used two functions in this project bcrypt.hash() to hash password and bcrypt.compare to compare string with hashed password.
+
+## Tools / Libraries / Softwares required.
+1. Install [npm](https://nodejs.org/) and Angular Client `npm install @angular/cli` (ignore if already installed)
+2. In command prompt type `npm install` to download starter packages.
+3. `cd restApi` and type `npm install bcrypt,jsonwebtoken,mongoose,express`
+4. Install [MongoDB](http://www.mongodb.com/)
+
+## How to Run
+1. Change directory to your project and `ng serve` to start angular server
+2. Change directory to bin folder of your mongodb installation folder, Mine is `c:/program files/mongodb/server/3.6/bin` and type `mongod` then open new command prompt and type `mongo`
+3. Change directory to `restApi/` and type `node index.js` to start Node Server
 
 ## Development server
 

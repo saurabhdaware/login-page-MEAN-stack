@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   }
 
   authorizeUser(){
-    try{
+    try{ // if access token is presend inside localstorage try is performed
       const accessToken = JSON.parse(window.localStorage.getItem('access-token'));
       const httpOptions = {
         headers: new HttpHeaders({ 
@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
           window.location.href = 'http://localhost:4200/profile'
         }
       })
-    }catch{
+    }catch{ // if access token is not present in localstorage, user is kept in home page
       console.log('You are not logged in');
     }
 

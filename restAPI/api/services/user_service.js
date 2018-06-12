@@ -5,7 +5,7 @@ let Promise = require('promise');
 
 exports.register = function(req,res){
     return new Promise(function(resolve,reject){
-        bcrypt.hash(req.body.pass,10,function(err,hashedPass){
+        bcrypt.hash(req.body.pass,10,function(err,hashedPass){ // This is to hash password
             if(err){console.log(err);reject();}
             else{
                 let user_details = new user_model({
@@ -18,7 +18,7 @@ exports.register = function(req,res){
                     if(err){
                         reject();
                     }else{
-                        resolve();
+                        resolve(); // if success? promise is resolved
                         console.log('info saved!');
                     }
                 });
@@ -43,8 +43,8 @@ exports.login = function(req,res){
                     if(value){
                         let payload = {
                             id:result._id
-                        }
-                        let secretKey = 'secretKey22499';
+                        } // you can encode anything you want
+                        let secretKey = 'secretKey22499'; // put any random secret key to pass through jwt
 
                         let token = jwt.sign(payload,secretKey,{expiresIn:1440}); // access token :: to be stored in user local storage
 
@@ -69,7 +69,7 @@ exports.jwtAuth = function(req,res){
                     reject({auth:'fail',reason:'user doesnt exist'});
                 }
                 if(result){
-                    if(result.name == req.body.name){
+                    if(result.name == req.body.name){ // just to be on the safer side we check if the name passed through is same as name in database
                         resolve({auth:'success',user:result});
                     }else{
                         reject({auth:'fail',reason:'different user'});

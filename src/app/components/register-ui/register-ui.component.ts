@@ -13,11 +13,11 @@ export class RegisterUiComponent implements OnInit {
   ngOnInit() {
   }
 
-  submitRegistrationForm(registrationForm){
+  submitRegistrationForm(registrationForm){ // function is performed when user clicks submit button on registration page
     let url = 'http://localhost:3000';
 
     this.http.post(url+'/register',registrationForm.form.value)
-    .subscribe((data:any)=>{
+    .subscribe((data:any)=>{ // if login is success we store token in localstorage and authorize user
       if(data.login == 'success'){
         window.localStorage.setItem('access-token',JSON.stringify({token:data.token,name:data.name}));
         this.http.post('http://localhost:3000/auth',{
@@ -35,7 +35,7 @@ export class RegisterUiComponent implements OnInit {
             window.location.href ="http://localhost:4200/profile";
           }
         })
-      }else{
+      }else{ // else we print error
         console.log(data.reason);
       }
     });

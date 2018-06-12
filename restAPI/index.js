@@ -33,6 +33,6 @@ app.use(function (req, res, next) {
 let user_model = require('./api/models/user_model');
 let user_routes = require('./api/routes/user_routes');
 
-user_routes(app);
+user_routes(app); // routing all the requests to api/routes/user_routes
 
 app.listen(3000);
