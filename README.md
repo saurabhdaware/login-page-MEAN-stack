@@ -31,6 +31,7 @@ This is a simple login page made with MEAN stack (MongoDB, ExpressJS, Angular 6,
 2. In command prompt type `npm install` to download starter packages.
 3. `cd restApi` and type `npm install bcrypt,jsonwebtoken,mongoose,express`
 4. Install [MongoDB](http://www.mongodb.com/)
+5. Go to bin folder in your mongodb directory, Mine is in `c:/program files/mongodb/server/3.6/bin` and type `mongostore <path of user_db folder>`
 
 ## How to Run
 1. Change directory to your project and `ng serve` to start angular server
