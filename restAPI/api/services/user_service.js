@@ -32,25 +32,25 @@ exports.login = function(req,res){
         user_model.findOne({email:req.body.email},function(err,result){
             if(err){
                 console.log(err);
-                reject(err);
+                reject({login:'fail',reason:err});
             }else if(!result){
-                reject('Entered email id is not registered');
+                reject({login:'fail',reason:'Entered email id is not registered'});
             }else if(result){
                 bcrypt.compare(req.body.pass, result.pass,function(err,value){ // compare passwords
                     if(err){
-                        reject('Wrong Password try again');
+                        reject({login:'fail',reason:'Wrong Password try again ' + err});
                     }
                     if(value){
                         let payload = {
-                            name:result.name+'sup?world'
+                            id:result._id
                         }
                         let secretKey = 'secretKey22499';
 
                         let token = jwt.sign(payload,secretKey,{expiresIn:1440}); // access token :: to be stored in user local storage
 
-                        resolve({login:'success',token:token});
+                        resolve({login:'success',token:token,name:result.name});
                     }else{
-                        reject('Wrong Password try again');
+                        reject({login:'fail',reason:'Wrong Password try again'});
                     }
                 })
             }
@@ -58,8 +58,24 @@ exports.login = function(req,res){
     })
 }
 
-// exports.jwtAuth = function(token,user){
-//     jwt.verify(token,'secretKey22499',function(err,decoded){
-//         if(decoded.name == user){resolve({})}
-//     })
-// }
+exports.jwtAuth = function(req,res){
+    return new Promise(function(resolve,reject){
+        jwt.verify(req.get('access-token'),'secretKey22499',function(err,decoded){
+            user_model.findById(decoded.id,{pass:0},function(err,result){
+                if(err){
+                    reject({auth:'fail',reason:err});
+                } 
+                if(!result){
+                    reject({auth:'fail',reason:'user doesnt exist'});
+                }
+                if(result){
+                    if(result.name == req.body.name){
+                        resolve({auth:'success',user:result});
+                    }else{
+                        reject({auth:'fail',reason:'different user'});
+                    }
+                }
+            })
+        })
+    })
+}

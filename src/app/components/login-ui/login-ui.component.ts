@@ -14,12 +14,33 @@ export class LoginUiComponent implements OnInit {
   }
 
   submitLoginForm(loginForm){
-    // console.log(loginForm.form.value.email);
-    // console.log(loginForm.form.value.pass);
     this.http.post('http://localhost:3000/login',{
       email:loginForm.form.value.email,
       pass:loginForm.form.value.pass
-    }).subscribe(data=>console.log(data));
+    }).subscribe((data:any)=>{
+      if(data.login == 'fail'){
+        console.log(data.reason);
+      }else if(data.login == 'success'){
+        window.localStorage.setItem('access-token',JSON.stringify({token:data.token,name:data.name}));
+        this.http.post('http://localhost:3000/auth',{
+          name:data.name
+        },{
+          headers:new HttpHeaders({
+            'Content-Type':'application/json',
+            'access-token':data.token
+          })
+        })
+        .subscribe((result:any)=>{
+          if(result.auth == 'fail'){
+            console.log(result.reason);
+          }else if(result.auth == 'success'){
+            window.location.href ="http://localhost:4200/profile";
+          }
+        })
+      }
+    });
+
   }
+
 
 }

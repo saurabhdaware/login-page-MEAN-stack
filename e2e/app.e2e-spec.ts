@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('login-page-mean-stack App', () => {
+describe('login-page-mean-stack-e2e App', () => {
   let page: AppPage;
 
   beforeEach(() => {

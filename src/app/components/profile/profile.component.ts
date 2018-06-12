@@ -1,18 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {HttpClient,HttpHeaders, HttpErrorResponse} from '@angular/common/http';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
 })
-export class HomeComponent implements OnInit {
+export class ProfileComponent implements OnInit {
+
+  name:string;
+  email:string;
 
   constructor(private http:HttpClient) { 
+      if(window.localStorage.getItem == undefined){
+        window.location.href = 'http://localhost:4200/'; // just to be on the safer side
+      }
       this.authorizeUser();
   }
 
   ngOnInit() {
+  }
+
+  logoutClicked(){
+    window.localStorage.removeItem('access-token');
+    window.location.href="http://localhost:4200/"
   }
 
   authorizeUser(){
@@ -32,13 +43,14 @@ export class HomeComponent implements OnInit {
       .subscribe((data:any)=>{
         console.log(data);
         if(data.auth == 'success'){
-          window.location.href = 'http://localhost:4200/profile'
+          console.log(data.user);
+          this.name = data.user.name;
+          this.email = data.user.email;
         }
       })
     }catch{
-      console.log('You are not logged in');
+      window.location.href = "http://localhost:4200";
     }
 
   }
-
 }

@@ -7,17 +7,27 @@ module.exports = function(app){
         .then(()=>{
             user_service.login(req,res)
             .then((val)=>{res.status(200).json(val)})
-            .catch((err)=>{res.send(err)});
+            .catch((err)=>{res.json(err)});
         })
         .catch(() => {
-            res.send("Registration failed");
+            res.json({registration:'failed',reason:"Registration failed"});
         })
     });
 
     app.post('/login',function(req,res){
         user_service.login(req,res)
         .then((val)=>{res.status(200).json(val)})
-        .catch((err)=>{res.send(err)});
+        .catch((err)=>{res.json(err)});
+    })
+             
+    app.post('/auth',function(req,res){
+        user_service.jwtAuth(req,res)
+        .then((auth)=>{
+            res.json(auth);
+        })
+        .catch((err)=>{
+            res.json(err);
+        })
     })
     
 }

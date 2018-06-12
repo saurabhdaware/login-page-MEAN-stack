@@ -15,10 +15,30 @@ export class RegisterUiComponent implements OnInit {
 
   submitRegistrationForm(registrationForm){
     let url = 'http://localhost:3000';
-    // console.log(registrationForm.form.value.email);
-    // console.log(registrationForm.form.value.pass);
+
     this.http.post(url+'/register',registrationForm.form.value)
-    .subscribe((response)=>{console.log(response)});
+    .subscribe((data:any)=>{
+      if(data.login == 'success'){
+        window.localStorage.setItem('access-token',JSON.stringify({token:data.token,name:data.name}));
+        this.http.post('http://localhost:3000/auth',{
+          name:data.name
+        },{
+          headers:new HttpHeaders({
+            'Content-Type':'application/json',
+            'access-token':data.token
+          })
+        })
+        .subscribe((result:any)=>{
+          if(result.auth == 'fail'){
+            console.log(result.reason);
+          }else if(result.auth == 'success'){
+            window.location.href ="http://localhost:4200/profile";
+          }
+        })
+      }else{
+        console.log(data.reason);
+      }
+    });
   }
 
 }
